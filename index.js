@@ -17,12 +17,16 @@ db.once("open",() => {
 })
 
 app.get("/:_id",(req,res)=>{
-    Product.findOne(req.body,(err,data)=>{
+    Product.findOne(req.params,(err,data)=>{
         if(err)
-            res.status(500).send(err);
-        else
-            res.status(201).send(data);
-    })
+            res.status(404).send(err);
+        else{
+            if(data)
+                res.status(200).send(data);
+            else
+                res.status(404).send(err);
+        }
+    });
 })
 
 app.post("/product",(req,res) => {
